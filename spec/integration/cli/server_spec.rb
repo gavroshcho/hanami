@@ -500,10 +500,10 @@ OUT
 
 
         replace "config/environment.rb", "require_relative '../apps/admin/application'", ""
-        replace "config/environment.rb", "mount Admin::Application, at: '/admin'", "mount :admin, at: '/admin' do\nrequire_relative '../apps/admin/application'\nAdmin::Application\nend"
+        replace "config/environment.rb", "mount Admin::Application, at: '/admin'", "if Hanami.app?(:admin)\nrequire_relative '../apps/admin/application'\nmount Admin::Application, at: '/admin'\nend"
 
         replace "config/environment.rb", "require_relative '../apps/web/application'", ""
-        replace "config/environment.rb", "mount Web::Application, at: '/'", "mount :web, at: '/' do\nrequire_relative '../apps/web/application'\nWeb::Application\nend"
+        replace "config/environment.rb", "mount Web::Application, at: '/'", "if Hanami.app?(:web)\nrequire_relative '../apps/web/application'\nmount Web::Application, at: '/'\nend"
 
         RSpec::Support::Env['HANAMI_APPS'] = 'web'
 
